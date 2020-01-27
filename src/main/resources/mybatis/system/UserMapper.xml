@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.totoro.blog.project.system.mapper.UserMapper">
+  <resultMap id="UserResult" type="com.totoro.blog.project.system.domain.User">
+    <!--@mbg.generated-->
+    <!--@Table user-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
+    <result column="login_date" jdbcType="TIMESTAMP" property="loginDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="delete_by" jdbcType="VARCHAR" property="deleteBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+      <collection property="roles" javaType="java.util.List" resultMap="RoleResult"/>
+  </resultMap>
+    <resultMap id="RoleResult" type="com.totoro.blog.project.system.domain.Role">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="key" column="key"/>
+        <result property="sort" column="sort"/>
+        <result property="status" column="status"/>
+    </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, nick_name, `type`, email, phone, gender, avatar, `password`, `status`, 
+    login_ip, login_date, remark, create_by, update_by, delete_by, create_time, update_time, 
+    delete_time
+  </sql>
+  
+  <sql id="selectUserVo">
+    SELECT U.ID
+            , U.NAME
+            , U.NICK_NAME
+            , U.EMAIL
+            , U.AVATAR
+            , U.PHONE
+            , U.PASSWORD
+            , U.GENDER
+            , U.STATUS
+            , U.LOGIN_IP
+            , U.LOGIN_DATE
+            , U.CREATE_BY
+            , U.CREATE_TIME
+            , U.REMARK
+            , U.DELETE_BY
+            , U.DELETE_TIME
+            , R.ID
+            , R.NAME
+            , R.KEY
+            , R.SORT
+            , R.STATUS
+        FROM USER U
+                LEFT JOIN USER_ROLE UR ON U.ID = UR.USER_ID
+                LEFT JOIN ROLE R ON R.ID = UR.ROLE_ID
+  </sql>
+  
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.totoro.blog.project.system.domain.User" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into user (`name`, nick_name, `type`, 
+      email, phone, gender, 
+      avatar, `password`, `status`, 
+      login_ip, login_date, remark, 
+      create_by, update_by, delete_by, 
+      create_time, update_time, delete_time
+      )
+    values (#{name,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{loginIp,jdbcType=VARCHAR}, #{loginDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{deleteBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <select id="selectUserList" resultMap="UserResult" parameterType="com.totoro.blog.project.system.domain.User">
+    <include refid="selectUserVo"/>
+    WHERE U.DELETE_TIME IS NULL
+    <if test="name != null and name != ''">
+        AND NAME LIKE CONCAT('%', #{name}, '%')
+    </if>
+  </select>
+    <select id="selectUserByUserName" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        WHERE 1 = 1
+            AND U.DELETE_TIME IS NULL
+            AND U.NAME = #{userName}
+    </select>
+</mapper>

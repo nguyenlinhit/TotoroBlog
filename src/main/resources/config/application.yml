@@ -1,0 +1,38 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 800
+    min-spare-threads: 30
+logging:
+  level:
+    root: WARN
+    com.totoro.blog.project.**.mapper: TRACE
+    com.totoro.blog: DEBUG
+    org.springframework: WARN
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+  devtools:
+    restart:
+      enabled: true
+mybatis:
+  type-aliases-package: com.totoro.blog.project.**.domain
+  mapper-locations: classpath*:mybatis/**/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+    use-generated-keys: true
+    default-executor-type: reuse
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

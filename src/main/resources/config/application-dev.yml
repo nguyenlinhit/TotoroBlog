@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/totoro_blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: nldev
+    password: 12345678x@X
+token:
+  #Token Custom Identifier
+  header: Authorization
+  #Token key
+  secret: abcdefghijklmnopqrstuvwxyz1224
+  #Token validity period (default 30 minutes)
+  expireTime: 30
+totoro:
+  name: TotoroBlog
+  version: 0.0.1
+  copyrightYear: 2020
+  profile: E:/working/personal/file
+  addressEnabled: true

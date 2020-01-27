@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.totoro.blog.project.system.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.totoro.blog.project.system.domain.Role">
+    <!--@mbg.generated-->
+    <!--@Table Role-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="key" jdbcType="VARCHAR" property="key" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="delete_by" jdbcType="VARCHAR" property="deleteBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, `key`, sort, `status`, remark, create_by, update_by, delete_by, create_time, 
+    update_time, delete_time
+  </sql>
+  <sql id="selectRoleVO">
+    SELECT  R.ID
+         , R.NAME
+         , R.KEY
+         , R.SORT
+         , R.STATUS
+         , R.REMARK
+         , R.CREATE_BY
+         , R.UPDATE_BY
+         , R.DELETE_BY
+         , R.CREATE_TIME
+         , R.UPDATE_TIME
+         , R.DELETE_TIME
+        FROM ROLE R
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="selectRoleList" resultMap="BaseResultMap">
+      <include refid="selectRoleVO"/>
+      WHERE R.DELETE_TIME IS NULL
+    </select>
+</mapper>
