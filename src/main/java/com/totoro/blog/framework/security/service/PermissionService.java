@@ -1,4 +1,4 @@
-package com.totoro.blog.framework.security;
+package com.totoro.blog.framework.security.service;
 
 import org.springframework.stereotype.Service;
 

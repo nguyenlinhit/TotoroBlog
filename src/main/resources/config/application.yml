@@ -8,29 +8,61 @@ server:
     min-spare-threads: 30
 logging:
   level:
-    root: WARN
-    com.totoro.blog.project.**.mapper: TRACE
-    com.totoro.blog: DEBUG
+    com.totoro.blog: TRACE
     org.springframework: WARN
+# Spring configuration
 spring:
   profiles:
     active: dev
+  # File upload
   servlet:
     multipart:
+      # Single file size
       max-file-size: 50MB
+      # Set the total uploaded file size
       max-request-size: 100MB
+  # Service module
   devtools:
     restart:
+      # Hot deployment switch
       enabled: true
+  # Redis configuration
+  redis:
+    # Address
+    host: localhost
+    # Port, default is 6379
+    port: 6379
+    # Connection timeout
+    timeout: 10s
+    lettuce:
+      pool:
+        # Minimum idle connection in connection pool
+        min-idle: 0
+        # Maximum idle connection in connection pool
+        max-idle: 8
+        # Maximum number of database connections in the connection pool
+        max-active: 8
+        # Connection pool maximum blocking wait time (use a negative value to indicate no limit)
+        max-wait: -1ms
+# Mybatis configuration
 mybatis:
+  # Search for specified package alias
   type-aliases-package: com.totoro.blog.project.**.domain
+  # Configure the mapper scan to find all mapper.xml mapping files
   mapper-locations: classpath*:mybatis/**/*Mapper.xml
+  #Global configuration
   configuration:
+    # Camel naming
     map-underscore-to-camel-case: true
+    # Global mapper enable cache
     cache-enabled: true
+    # Allow to JDBC to support primary key generation
     use-generated-keys: true
+    # Configure the default actuator
     default-executor-type: reuse
+    # Specify the specific implementation of the log used by Mybatis
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+# PageHelper paging plugin
 pagehelper:
   helper-dialect: mysql
   reasonable: true

@@ -23,19 +23,19 @@
     update_time, delete_time
   </sql>
   <sql id="selectRoleVO">
-    SELECT  R.ID
-         , R.NAME
-         , R.KEY
-         , R.SORT
-         , R.STATUS
-         , R.REMARK
-         , R.CREATE_BY
-         , R.UPDATE_BY
-         , R.DELETE_BY
-         , R.CREATE_TIME
-         , R.UPDATE_TIME
-         , R.DELETE_TIME
-        FROM ROLE R
+    select  r.id
+         , r.name
+         , r.key
+         , r.sort
+         , r.status
+         , r.remark
+         , r.create_by
+         , r.update_by
+         , r.delete_by
+         , r.create_time
+         , r.update_time
+         , r.delete_time
+        from role r
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -46,6 +46,6 @@
   </select>
     <select id="selectRoleList" resultMap="BaseResultMap">
       <include refid="selectRoleVO"/>
-      WHERE R.DELETE_TIME IS NULL
+        where r.delete_time is null
     </select>
 </mapper>

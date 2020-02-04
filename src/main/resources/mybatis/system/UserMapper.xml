@@ -40,30 +40,30 @@
   </sql>
   
   <sql id="selectUserVo">
-    SELECT U.ID
-            , U.NAME
-            , U.NICK_NAME
-            , U.EMAIL
-            , U.AVATAR
-            , U.PHONE
-            , U.PASSWORD
-            , U.GENDER
-            , U.STATUS
-            , U.LOGIN_IP
-            , U.LOGIN_DATE
-            , U.CREATE_BY
-            , U.CREATE_TIME
-            , U.REMARK
-            , U.DELETE_BY
-            , U.DELETE_TIME
-            , R.ID
-            , R.NAME
-            , R.KEY
-            , R.SORT
-            , R.STATUS
-        FROM USER U
-                LEFT JOIN USER_ROLE UR ON U.ID = UR.USER_ID
-                LEFT JOIN ROLE R ON R.ID = UR.ROLE_ID
+    select u.id
+            , u.name
+            , u.nick_name
+            , u.email
+            , u.avatar
+            , u.phone
+            , u.password
+            , u.gender
+            , u.status
+            , u.login_ip
+            , u.login_date
+            , u.create_by
+            , u.create_time
+            , u.remark
+            , u.delete_by
+            , u.delete_time
+            , r.id
+            , r.name
+            , r.key
+            , r.sort
+            , r.status
+        from user u
+                left join user_role ur on u.id = ur.user_id
+                left join role r on r.id = ur.role_id
   </sql>
   
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.totoro.blog.project.system.domain.User" useGeneratedKeys="true">
@@ -85,15 +85,15 @@
   </insert>
   <select id="selectUserList" resultMap="UserResult" parameterType="com.totoro.blog.project.system.domain.User">
     <include refid="selectUserVo"/>
-    WHERE U.DELETE_TIME IS NULL
+      where u.delete_time is null
     <if test="name != null and name != ''">
-        AND NAME LIKE CONCAT('%', #{name}, '%')
+        and name like concat('%', #{name}, '%')
     </if>
   </select>
     <select id="selectUserByUserName" resultMap="UserResult">
         <include refid="selectUserVo"/>
-        WHERE 1 = 1
-            AND U.DELETE_TIME IS NULL
-            AND U.NAME = #{userName}
+        where 1 = 1
+            and u.delete_time is null
+            and u.name = #{username}
     </select>
 </mapper>
