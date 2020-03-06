@@ -1,4 +1,4 @@
-package com.totoro.blog.common;
+package com.totoro.blog.common.utils;
 
 /**
  * @author linhnguyen
@@ -25,7 +25,11 @@ public class IdUtils {
      *
      * @return Random UUID
      */
-    public static String fastUUID(){
+    public static String fastUUID() {
         return UUID.fastUUID().toString();
+    }
+
+    public static String simpleUUID() {
+        return UUID.randomUUID().toString(true);
     }
 }

@@ -1,4 +1,4 @@
-package com.totoro.blog.common;
+package com.totoro.blog.common.utils;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -113,5 +113,96 @@ public final class UUID implements Serializable, Comparable<UUID> {
     @Override
     public int compareTo(UUID uuid) {
         return 0;
+    }
+
+    /**
+     * Returns a string representation of this {@code UUID}.
+     *
+     * <p>
+     * The string representation of the UUID is described by this BNF:
+     *
+     * <pre>
+     *      {@code
+     *       UUID                   = <time_low>-<time_mid>-<time_high_and_version>-<variant_and_sequence>-<node>
+     *       time_low               = 4*<hexOctet>
+     *       time_mid               = 2*<hexOctet>
+     *       time_high_and_version  = 2*<hexOctet>
+     *       variant_and_sequence   = 2*<hexOctet>
+     *       node                   = 6*<hexOctet>
+     *       hexOctet               = <hexDigit><hexDigit>
+     *       hexDigit               = [0-9a-fA-F]
+     *      }
+     * </pre>
+     *
+     * @param isSimple Whether simple mode, simple mode is UUID string without '-'
+     * @return A string representation of this {@code UUID}
+     */
+    public String toString(boolean isSimple) {
+        final StringBuilder builder = new StringBuilder(isSimple ? 32 : 36);
+        // time_low
+        builder.append(digits(mostSigBits >> 32, 8));
+        if (isSimple == false) {
+            builder.append('-');
+        }
+        // time_mid
+        builder.append(digits(mostSigBits >> 16, 4));
+        if (isSimple == false) {
+            builder.append('-');
+        }
+        // time_high_and_version
+        builder.append(digits(mostSigBits, 4));
+        if (false == isSimple) {
+            builder.append('-');
+        }
+        // variant_and_sequence
+        builder.append(digits(lastSigBits >> 48, 4));
+        if (isSimple == false) {
+            builder.append('-');
+        }
+        // node
+        builder.append(digits(lastSigBits, 12));
+
+        return builder.toString();
+    }
+
+    /**
+     * Returns the hex value corresponding to the specified number.
+     *
+     * @param val    Value
+     * @param digits Rank
+     * @return String
+     */
+    private static String digits(long val, int digits) {
+        long hi = 1L << (digits * 4);
+        return Long.toHexString(hi | (val & (hi - 1))).substring(1);
+    }
+
+    /**
+     * Returns a string representation of this {@code UUID}.
+     *
+     * <p>
+     * The string representation of the UUID is described by this BNF:
+     *
+     * <pre>
+     *      {@code
+     *       UUID                   = <time_low>-<time_mid>-<time_high_and_version>-<variant_and_sequence>-<node>
+     *       time_low               = 4*<hexOctet>
+     *       time_mid               = 2*<hexOctet>
+     *       time_high_and_version  = 2*<hexOctet>
+     *       variant_and_sequence   = 2*<hexOctet>
+     *       node                   = 6*<hexOctet>
+     *       hexOctet               = <hexDigit><hexDigit>
+     *       hexDigit               = [0-9a-fA-F]
+     *      }
+     * </pre>
+     *
+     * </blockquote>
+     *
+     * @return A string representation of this {@code UUID}
+     * @see #toString(boolean)
+     */
+    @Override
+    public String toString() {
+        return toString(false);
     }
 }

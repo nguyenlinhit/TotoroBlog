@@ -1,6 +1,6 @@
 package com.totoro.blog.framework.web.exception;
 
-import com.totoro.blog.common.StringUtils;
+import com.totoro.blog.common.utils.StringUtils;
 import com.totoro.blog.common.exception.BaseException;
 import com.totoro.blog.common.exception.CustomException;
 import com.totoro.blog.framework.web.domain.AjaxResult;

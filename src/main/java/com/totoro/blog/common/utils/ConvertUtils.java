@@ -1,4 +1,9 @@
-package com.totoro.blog.common;
+package com.totoro.blog.common.utils;
+
+import com.totoro.blog.common.utils.text.CharsetKit;
+
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 
 /**
  * @version 1.0
@@ -69,7 +74,57 @@ public class ConvertUtils {
      * @param value Value
      * @return Integer
      */
-    public static Integer toInt(Object value){
+    public static Integer toInt(Object value) {
         return toInt(value, null);
+    }
+
+    /**
+     * Convert object to string<br></>
+     * 1) Byte array and ByteBuffer will be converted into an array of corresponding string.
+     * 2) The object array will call the Arrays.toString() method.
+     *
+     * @param obj     Object
+     * @param charset Character set
+     * @return String
+     */
+    public static String str(Object obj, Charset charset) {
+        if (null == obj) {
+            return null;
+        }
+
+        if (obj instanceof String) {
+            return (String) obj;
+        } else if (obj instanceof byte[] || obj instanceof Byte[]) {
+            return str(obj, charset);
+        } else if (obj instanceof ByteBuffer) {
+            return str(obj, charset);
+        }
+
+        return obj.toString();
+    }
+
+    /**
+     * Convert object to string<br></>
+     * 1) Byte array and ByteBuffer will be converted into an array of corresponding string.
+     * 2) The object array will call the Arrays.toString() method.
+     *
+     * @param obj         Object
+     * @param charsetName Character Name
+     * @return String
+     */
+    public static String str(Object obj, String charsetName) {
+        return str(obj, Charset.forName(charsetName));
+    }
+
+    /**
+     * Convert object to string<br></>
+     * 1) Byte array and ByteBuffer will be converted into an array of corresponding string.
+     * 2) The object array will call the Arrays.toString() method.
+     *
+     * @param obj Object
+     * @return String
+     */
+    public static String utf8Str(Object obj) {
+        return str(obj, CharsetKit.UTF_8);
     }
 }

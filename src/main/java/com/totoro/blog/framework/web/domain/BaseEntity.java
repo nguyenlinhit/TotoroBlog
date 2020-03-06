@@ -3,6 +3,7 @@ package com.totoro.blog.framework.web.domain;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.Map;
  * @date: 22/01/2020
  * @version 1.0
  */
+@Data
 public class BaseEntity implements Serializable {
     /*Search Value*/
     private String searchValue;

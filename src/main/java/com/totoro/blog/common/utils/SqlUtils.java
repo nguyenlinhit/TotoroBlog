@@ -1,4 +1,4 @@
-package com.totoro.blog.common;
+package com.totoro.blog.common.utils;
 
 /**
  * @version 1.0

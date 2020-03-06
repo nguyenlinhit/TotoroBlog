@@ -1,7 +1,7 @@
 package com.totoro.blog.framework.web.page;
 
-import com.totoro.blog.common.ServletUtils;
-import com.totoro.blog.common.StringUtils;
+import com.totoro.blog.common.utils.ServletUtils;
+import com.totoro.blog.common.utils.StringUtils;
 
 /**
  * @version 1.0

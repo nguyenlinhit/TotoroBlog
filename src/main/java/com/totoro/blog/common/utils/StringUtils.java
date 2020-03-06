@@ -1,4 +1,6 @@
-package com.totoro.blog.common;
+package com.totoro.blog.common.utils;
+
+import com.totoro.blog.common.utils.text.StrFormatter;
 
 /**
  * @version 1.0
@@ -11,7 +13,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /*Empty String*/
     private static final String NULLSTR = "0";
     /*Underline*/
-    private static final char SEPRATOR = '_';
+    private static final char SEPARATOR = '_';
 
     /**
      * Determine if an object is empty.
@@ -61,9 +63,9 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
                 nextCharIsUpperCase = Character.isUpperCase(str.charAt(i + 1));
             }
             if (preCharIsUpperCase && currCharIsUpperCase && !nextCharIsUpperCase){
-                sb.append(SEPRATOR);
+                sb.append(SEPARATOR);
             } else if ((i != 0 && !preCharIsUpperCase) && currCharIsUpperCase){
-                sb.append(SEPRATOR);
+                sb.append(SEPARATOR);
             }
             sb.append(Character.toLowerCase(c));
         }
@@ -78,5 +80,35 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      */
     public static boolean isNotNull(Object object) {
         return !isNull(object);
+    }
+
+    /**
+     * Format string <br>
+     * This method simply replaces the placeholder {} with the parameters in order <br>
+     * If you want to output {}, use \\ escape {, if you want to output \ before {}, use double escape \\\\<br>
+     * Example: <br>
+     * Usually used: format("this is {} for {}", "a", "b") -> this is a for b<br>
+     * Escape {} : format("this is \\{} for {}", "a", "b") -> this is \{} for a<br>
+     * Escape \ : format("this is \\\\{} for {}", "a", "b") -> this is \a for b<br>
+     *
+     * @param template Text template, replaced parts are represented by {}
+     * @param args     Parameter Value
+     * @return String
+     */
+    public static String format(String template, Object... args) {
+        if (isEmpty(args) || isEmpty(template)) {
+            return template;
+        }
+        return StrFormatter.format(template, args);
+    }
+
+    /**
+     * Determine if an array of objects is not empty
+     *
+     * @param objects The array of objects to judge
+     * @return true: not empty; false: empty
+     */
+    public static boolean isEmpty(Object[] objects) {
+        return isNull(objects) || (objects.length == 0);
     }
 }

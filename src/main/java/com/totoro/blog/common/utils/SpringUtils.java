@@ -1,4 +1,4 @@
-package com.totoro.blog.common;
+package com.totoro.blog.common.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;

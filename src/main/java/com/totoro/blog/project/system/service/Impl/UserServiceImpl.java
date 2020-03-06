@@ -8,14 +8,14 @@ import com.totoro.blog.project.system.service.UserService;
 import java.util.List;
 
 /**
+ * @version 1.0
  * @className: UserServiceImpl
- * @description: description here!!!
+ * @description: User service implement
  * @author: Linh.Nguyen
  * @date: 23/01/2020
- * @version 1.0
  */
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
@@ -23,14 +23,48 @@ public class UserServiceImpl implements UserService{
         this.userMapper = userMapper;
     }
 
+    /**
+     * Add user information.
+     *
+     * @param user User info
+     * @return int
+     */
     @Override
-    public int insert(User record) {
-        return userMapper.insert(record);
+    public int insert(User user) {
+        return userMapper.insert(user);
     }
 
+    /**
+     * Retrieve user list by conditions
+     *
+     * @param user User info
+     * @return List<User>
+     */
     @Override
     public List<User> selectUserList(User user) {
         return userMapper.selectUserList(user);
+    }
+
+    /**
+     * Retrieve user by user name
+     *
+     * @param userName User name
+     * @return User
+     */
+    @Override
+    public User selectUserByUserName(String userName) {
+        return userMapper.selectUserByUserName(userName);
+    }
+
+    /**
+     * Check unique user name
+     *
+     * @param userName User name
+     * @return int
+     */
+    @Override
+    public int checkUserNameUnique(String userName) {
+        return userMapper.checkUserNameUnique(userName);
     }
 
 }

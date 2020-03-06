@@ -1,7 +1,7 @@
 package com.totoro.blog.common.exception;
 
-import com.totoro.blog.common.MessageUtils;
-import com.totoro.blog.common.StringUtils;
+import com.totoro.blog.common.utils.MessageUtils;
+import com.totoro.blog.common.utils.StringUtils;
 
 /**
  * @version 1.0

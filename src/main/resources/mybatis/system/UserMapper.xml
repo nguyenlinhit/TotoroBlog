@@ -65,35 +65,49 @@
                 left join user_role ur on u.id = ur.user_id
                 left join role r on r.id = ur.role_id
   </sql>
-  
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.totoro.blog.project.system.domain.User" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into user (`name`, nick_name, `type`, 
-      email, phone, gender, 
-      avatar, `password`, `status`, 
-      login_ip, login_date, remark, 
-      create_by, update_by, delete_by, 
-      create_time, update_time, delete_time
-      )
-    values (#{name,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
-      #{avatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{loginIp,jdbcType=VARCHAR}, #{loginDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
-      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{deleteBy,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <select id="selectUserList" resultMap="UserResult" parameterType="com.totoro.blog.project.system.domain.User">
-    <include refid="selectUserVo"/>
-      where u.delete_time is null
-    <if test="name != null and name != ''">
-        and name like concat('%', #{name}, '%')
-    </if>
-  </select>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.totoro.blog.project.system.domain.User"
+            useGeneratedKeys="true">
+        insert into user (
+        <if test="name != null and name != ''">,name</if>
+        <if test="nickName != null and nickName != ''">,nick_name</if>
+        <if test="email != null and email != ''">,email</if>
+        <if test="avatar != null and avatar != ''">,avatar</if>
+        <if test="phone != null and phone != ''">,phone</if>
+        <if test="gender != null and gender != ''">,gender</if>
+        <if test="password != null and password != ''">,password</if>
+        <if test="status != null and status != ''">,status</if>
+        <if test="createBy != null and createBy != ''">,create_by</if>
+        <if test="remark != null and remark != ''">,remark</if>
+        ) values (
+        <if test="name != null and name != ''">#{name,jdbcType=VARCHAR}</if>
+        <if test="nickName != null and nickName != ''">#{nickName,jdbcType=VARCHAR}</if>
+        <if test="email != null and email != ''">#{email,jdbcType=VARCHAR}</if>
+        <if test="avatar != null and avatar != ''">#{avatar,jdbcType=VARCHAR}</if>
+        <if test="phone != null and phone != ''">#{phone,jdbcType=VARCHAR}</if>
+        <if test="gender != null and gender != ''">#{gender,jdbcType=CHAR}</if>
+        <if test="password != null and password != ''">#{password,jdbcType=VARCHAR}</if>
+        <if test="status != null and status != ''">#{status,jdbcType=CHAR}</if>
+        <if test="createBy != null and createBy != ''">#{createBy,jdbcType=VARCHAR}</if>
+        <if test="remark != null and remark != ''">#{remark,jdbcType=VARCHAR}</if>
+        )
+    </insert>
+    <select id="selectUserList" resultMap="UserResult" parameterType="com.totoro.blog.project.system.domain.User">
+        <include refid="selectUserVo"/>
+        where u.delete_time is null
+        <if test="name != null and name != ''">
+            and name like concat('%', #{name}, '%')
+        </if>
+    </select>
     <select id="selectUserByUserName" resultMap="UserResult">
         <include refid="selectUserVo"/>
         where 1 = 1
-            and u.delete_time is null
-            and u.name = #{username}
+        and u.delete_time is null
+        and u.name = #{username}
+    </select>
+    <select id="checkUserNameUnique" parameterType="String" resultType="int">
+        select count(1)
+        from user
+        where user_name = #{userName,jdbcType=VARCHAR}
     </select>
 </mapper>

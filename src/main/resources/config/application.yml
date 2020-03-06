@@ -29,7 +29,7 @@ spring:
   # Redis configuration
   redis:
     # Address
-    host: localhost
+    host: 127.0.0.1
     # Port, default is 6379
     port: 6379
     # Connection timeout
@@ -64,7 +64,7 @@ mybatis:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 # PageHelper paging plugin
 pagehelper:
-  helper-dialect: mysql
+  helper-dialect: mariadb
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
