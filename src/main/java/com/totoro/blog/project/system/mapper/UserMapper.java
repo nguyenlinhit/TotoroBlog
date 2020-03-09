@@ -43,4 +43,18 @@ public interface UserMapper {
      * @return int
      */
     int checkUserNameUnique(String userName);
+
+    /**
+     * Check unique phone of user.
+     *
+     * @param phone Phone number
+     * @return User
+     */
+    User checkPhoneUnique(String phone);
+
+    /**
+     * @param email Email user
+     * @return User
+     */
+    User checkEmailUnique(String email);
 }

@@ -1,5 +1,7 @@
 package com.totoro.blog.project.system.service.Impl;
 
+import com.totoro.blog.common.contant.UserConstants;
+import com.totoro.blog.common.utils.StringUtils;
 import org.springframework.stereotype.Service;
 import com.totoro.blog.project.system.mapper.UserMapper;
 import com.totoro.blog.project.system.domain.User;
@@ -57,14 +59,52 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Check unique user name
+     * Check unique user name when add new user.
      *
      * @param userName User name
-     * @return int
+     * @return String
      */
     @Override
-    public int checkUserNameUnique(String userName) {
-        return userMapper.checkUserNameUnique(userName);
+    public String checkUserNameUnique(String userName) {
+        int count = userMapper.checkUserNameUnique(userName);
+        if (count > 0) {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
+    }
+
+    /**
+     * Check unique phone when add new user.
+     *
+     * @param user User
+     * @return String
+     */
+    @Override
+    public String checkPhoneUnique(User user) {
+        Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();
+        User info = userMapper.checkPhoneUnique(user.getPhone());
+
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != userId.longValue()) {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
+    }
+
+    /**
+     * Check unique email when add new user.
+     *
+     * @param user User
+     * @return String
+     */
+    @Override
+    public String checkEmailUnique(User user) {
+        Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();
+        User info = userMapper.checkEmailUnique(user.getEmail());
+
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != userId.longValue()) {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
     }
 
 }

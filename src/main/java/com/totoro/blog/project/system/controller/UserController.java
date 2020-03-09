@@ -3,6 +3,7 @@ package com.totoro.blog.project.system.controller;
 import com.totoro.blog.common.contant.Constants;
 import com.totoro.blog.common.contant.UserConstants;
 import com.totoro.blog.common.enums.UserStatus;
+import com.totoro.blog.common.utils.SecurityUtils;
 import com.totoro.blog.framework.security.service.SysLoginService;
 import com.totoro.blog.framework.security.service.TokenService;
 import com.totoro.blog.framework.web.controller.BaseController;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * @version 1.0
  * @className: UserController
- * @description: User information
+ * @description: User information.
  * @author: Linh.Nguyen
  * @date: 26/01/2020
  */
@@ -56,7 +57,12 @@ public class UserController extends BaseController {
     public AjaxResult add(@RequestBody User user) {
         if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user.getName()))) {
             return AjaxResult.error("Add new user " + user.getName() + " fail, login account already exists.");
+        } else if (UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
+            return AjaxResult.error("Add new user " + user.getName() + " fail, mobile phone number already exists.");
+        } else if (UserConstants.NOT_UNIQUE.equals(userService.checkEmailUnique(user))) {
+            return AjaxResult.error("Add new user " + user.getName() + " fail, email already exists.");
         }
+        user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         return toAjax(userService.insert(user));
     }
 }

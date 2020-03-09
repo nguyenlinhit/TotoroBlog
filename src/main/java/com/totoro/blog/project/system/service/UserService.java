@@ -29,7 +29,7 @@ public interface UserService {
     List<User> selectUserList(User user);
 
     /**
-     * Retrieve user by user name
+     * Retrieve user by user name.
      *
      * @param userName User name
      * @return User
@@ -37,10 +37,26 @@ public interface UserService {
     User selectUserByUserName(String userName);
 
     /**
-     * Check unique user name
+     * Check unique user name when add new user.
      *
      * @param userName User name
-     * @return int
+     * @return String
      */
-    int checkUserNameUnique(String userName);
+    String checkUserNameUnique(String userName);
+
+    /**
+     * Check unique phone when add new user.
+     *
+     * @param user User
+     * @return String
+     */
+    String checkPhoneUnique(User user);
+
+    /**
+     * Check unique email when add new user.
+     *
+     * @param user User
+     * @return String
+     */
+    String checkEmailUnique(User user);
 }

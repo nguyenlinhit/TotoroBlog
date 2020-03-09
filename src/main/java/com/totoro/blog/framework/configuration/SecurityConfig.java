@@ -73,7 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("swagger-ui.html").anonymous()
                 .antMatchers("/webjars/**").anonymous()
                 .antMatchers("/*/api-docs").anonymous()
-                .antMatchers("/f/**").permitAll()
+//                .antMatchers("/system/user", "/system/user/list").anonymous()
+                .antMatchers("/t/**").permitAll()
                 .anyRequest().authenticated().and()
                 .headers().frameOptions().disable();
         http.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
