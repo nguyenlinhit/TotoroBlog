@@ -114,6 +114,7 @@ public class TokenService {
         String ip = IpUtils.getIPAddr(ServletUtils.getRequest());
         loginUser.setIP(ip);
         //loginUser.setLocation();
+        //TODO implement feature in here!!!
     }
 
     /**
@@ -166,7 +167,7 @@ public class TokenService {
      * @return Token
      */
     private String getToken(HttpServletRequest request) {
-        String token = request.getHeader(header);
+        String token = request.getHeader("Authorization");
         if (StringUtils.isNotEmpty(token) && token.startsWith(Constants.TOKEN_PREFIX)) {
             token = token.replace(Constants.TOKEN_PREFIX, "");
         }
