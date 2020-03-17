@@ -1,5 +1,6 @@
 package com.totoro.blog.project.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.totoro.blog.framework.web.domain.BaseEntity;
 import java.io.Serializable;
 import lombok.Data;
@@ -13,9 +14,10 @@ import lombok.NoArgsConstructor;
  * @date: 27/01/2020
  * @version 1.0
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-@EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Role extends BaseEntity implements Serializable {
     private Long id;
 
@@ -25,6 +27,7 @@ public class Role extends BaseEntity implements Serializable {
     private String name;
 
     /**
+     *
     * Role Permission String
     */
     private String key;
@@ -39,5 +42,15 @@ public class Role extends BaseEntity implements Serializable {
     */
     private Byte status;
 
+    private boolean flag = false;
+
     private static final long serialVersionUID = 1L;
+
+    private static boolean isAdmin(Long roleID){
+        return roleID != null && 1L == roleID;
+    }
+
+    public boolean isAdmin(){
+        return isAdmin(this.id);
+    }
 }
